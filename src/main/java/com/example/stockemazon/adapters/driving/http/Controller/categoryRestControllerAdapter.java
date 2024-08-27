@@ -33,4 +33,5 @@ public class categoryRestControllerAdapter {
         categoryServicePort.saveCategory(CategoryRequestMapper.addRequestToCategory(request));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
 }

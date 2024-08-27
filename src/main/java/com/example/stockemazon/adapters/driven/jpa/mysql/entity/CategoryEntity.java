@@ -1,14 +1,14 @@
 package com.example.stockemazon.adapters.driven.jpa.mysql.entity;
 
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "category")
+@Table(name = "Category")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

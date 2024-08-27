@@ -9,5 +9,4 @@ import java.util.List;
 public interface ICategoryEntityMapper {
     Category toModel(CategoryEntity categoryEntity);
     CategoryEntity toEntity(Category category);
-    List<Category> toModelList(List<CategoryEntity> categoryEntities);
 }
