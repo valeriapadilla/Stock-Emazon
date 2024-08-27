@@ -10,5 +10,4 @@ import com.example.stockemazon.domain.model.Category;
 @Mapper(componentModel = "spring")
 public interface ICategoryResponseMapper {
     categoryResponse toCategoryResponse(Category category);
-    List<categoryResponse> toProductResponseList(List<Category> products);
 }

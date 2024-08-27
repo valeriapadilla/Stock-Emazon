@@ -17,6 +17,8 @@ import com.example.stockemazon.domain.api.ICategoryServicePort;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/category")
@@ -30,10 +32,5 @@ public class categoryRestControllerAdapter {
     public ResponseEntity<Void> addCategory(@RequestBody addCategoryRequest request) {
         categoryServicePort.saveCategory(CategoryRequestMapper.addRequestToCategory(request));
         return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    @GetMapping("/search/{categoryName}")
-    public ResponseEntity<categoryResponse> getCategory(@PathVariable String categoryName) {
-        return ResponseEntity.ok(CategoryResponseMapper.toProductResponse(productServicePort.getProduct(productName)));
     }
 }
