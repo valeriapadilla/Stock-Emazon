@@ -1,6 +1,7 @@
 package com.example.stockemazon.domain.model;
 import com.example.stockemazon.domain.exceptions.InvalidCategoryDescriptionException;
 import com.example.stockemazon.domain.exceptions.InvalidCategoryNameException;
+import com.example.stockemazon.domain.util.domainConstant;
 
 public class Category {
     private Long id;
@@ -9,10 +10,10 @@ public class Category {
 
     public Category(Long id, String name, String description) {
         if (name == null || name.length() > 50) {
-            throw new InvalidCategoryNameException("The name cannot be null and must have a maximum of 50 characters");
+            throw new InvalidCategoryNameException(domainConstant.INVALID_CATEGORY_NAME_CHARACTERS_EXCEPTION_MESSAGE);
         }
         if (description == null || description.length() > 90) {
-            throw new InvalidCategoryDescriptionException("The description cannot be null and must have a maximum of 90 characters.");
+            throw new InvalidCategoryDescriptionException(domainConstant.INVALID_CATEGORY_DESCRIPTION_CHARACTERS_EXCEPTION_MESSAGE);
         }
         this.setId(id);
         this.setName(name);

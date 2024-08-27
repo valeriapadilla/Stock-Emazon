@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class ControllerAdvisor {
 
     @ExceptionHandler(CategoryAlreadyExistsException.class)
-    public ResponseEntity<ExceptionResponse> handleSupplierAlreadyExistsException() {
+    public ResponseEntity<ExceptionResponse> handlecategoryAlreadyExistsException() {
         return ResponseEntity.badRequest().body(new ExceptionResponse(constants.CATEGORY_ALREADY_EXISTS_EXCEPTION_MESSAGE,
                 HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
     }
