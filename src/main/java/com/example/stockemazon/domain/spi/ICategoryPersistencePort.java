@@ -1,11 +1,12 @@
 
 package com.example.stockemazon.domain.spi;
 
-import java.util.List;
 
 import com.example.stockemazon.domain.model.Category;
 
 public interface ICategoryPersistencePort {
-    boolean existsByName(String name);
+    boolean findByName(String name);
     void saveCategory(Category category);
+    void updateCategory(Category category);
+    void deleteCategory(String categoryName);
 }

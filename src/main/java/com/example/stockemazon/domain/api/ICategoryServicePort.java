@@ -5,4 +5,6 @@ import com.example.stockemazon.domain.model.Category;
 
 public interface ICategoryServicePort {
     void saveCategory(Category category);
+    void updateCategory(Category category);
+    void deleteCategory(String categoryName);
 }
