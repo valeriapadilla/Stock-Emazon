@@ -50,12 +50,20 @@ public class ControllerAdvisor {
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        return ResponseEntity.badRequest().body(Collections.singletonMap("errors", errors));
+        return ResponseEntity.badRequest().body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), errors));
     }
     @ExceptionHandler(MissingAttributeException.class)
     public ResponseEntity<Map<String, String>> handleMissingAttributeException(
             MissingAttributeException ex) {
-        Map<String, String> errorResponse = Collections.singletonMap("error", ex.getMessage());
+        Map<String, String> errorResponse = Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(PaginationException.class)
+    public ResponseEntity<Map<String, String>> handlePaginationException(
+            PaginationException ex) {
+        Map<String, String> errorResponse= Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
     }
 }

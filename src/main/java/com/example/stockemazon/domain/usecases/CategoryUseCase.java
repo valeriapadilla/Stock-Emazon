@@ -4,8 +4,10 @@ package com.example.stockemazon.domain.usecases;
 import com.example.stockemazon.domain.api.ICategoryServicePort;
 import com.example.stockemazon.domain.exceptions.*;
 import com.example.stockemazon.domain.model.Category;
+import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.spi.ICategoryPersistencePort;
 import com.example.stockemazon.domain.util.DomainConstant;
+import com.example.stockemazon.domain.util.PaginationValidator;
 
 public class CategoryUseCase implements ICategoryServicePort{
 
@@ -49,5 +51,11 @@ public class CategoryUseCase implements ICategoryServicePort{
             throw new CategoryNotFoundException(DomainConstant.CATEGORY_NOTFOUND_EXCEPTION);
         }
         this.categoryPersistencePort.deleteCategory(categoryName);
+    }
+
+    @Override
+    public PageCustom<Category> getAllCategories(int page, int size, String sort, String sortBy) {
+        PaginationValidator.validatePaginationParameters(page, size, sort, sortBy);
+        return this.categoryPersistencePort.getAllCategories(page, size, sort, sortBy);
     }
 }

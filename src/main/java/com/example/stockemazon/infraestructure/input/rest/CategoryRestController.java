@@ -2,6 +2,7 @@ package com.example.stockemazon.infraestructure.input.rest;
 
 import com.example.stockemazon.application.dto.CategoryRequest;
 import com.example.stockemazon.application.handler.ICategoryHandler;
+import com.example.stockemazon.domain.model.PageCustom;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,5 +54,16 @@ public class CategoryRestController {
     public ResponseEntity<Void> deleteCategory(@PathVariable String categoryName) {
         categoryHandler.deleteCategory(categoryName);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<PageCustom<CategoryRequest>> getAllCategories(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "ASC") String sort,
+            @RequestParam(defaultValue = "name") String sortBy) {
+
+        PageCustom<CategoryRequest> categories = categoryHandler.getAllCategories(page, size, sort, sortBy);
+        return ResponseEntity.ok(categories);
     }
 }
