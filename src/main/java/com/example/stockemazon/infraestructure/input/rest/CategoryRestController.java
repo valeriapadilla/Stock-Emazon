@@ -57,6 +57,13 @@ public class CategoryRestController {
     }
 
     @GetMapping
+    @Operation(summary = "Retrieve all categories with pagination and sorting",
+            description = "This endpoint retrieves a paginated list of categories with optional sorting. You can specify the page number, page size, sort direction (ASC or DESC), and the field by which to sort (e.g., name or description).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of categories"),
+            @ApiResponse(responseCode = "400", description = "Invalid pagination or sorting parameters"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     public ResponseEntity<PageCustom<CategoryRequest>> getAllCategories(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,

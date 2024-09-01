@@ -1,7 +1,5 @@
 package com.example.stockemazon.infraestructure.output.jpa.mapper;
 
-import com.example.stockemazon.application.dto.CategoryRequest;
-import com.example.stockemazon.application.mapper.ICategoryRequestMapper;
 import com.example.stockemazon.domain.model.Category;
 import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.infraestructure.output.jpa.entity.CategoryEntity;

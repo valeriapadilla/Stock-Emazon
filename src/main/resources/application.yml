@@ -7,8 +7,8 @@ logging:
 spring:
     datasource:
         url: jdbc:mysql://localhost/emazon_stock
-        username: "admin"
-        password: "1007Admin@236176"
+        username: ${stock_user}
+        password: ${stock_password}
     jpa:
         hibernate:
             ddl-auto: update
