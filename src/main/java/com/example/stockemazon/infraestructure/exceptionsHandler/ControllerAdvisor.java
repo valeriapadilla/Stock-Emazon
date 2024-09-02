@@ -35,9 +35,9 @@ public class ControllerAdvisor {
                 .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), emptyAttributeException.getMessage()));
     }
 
-    @ExceptionHandler(CategoryDataOutOfLenghtException.class)
+    @ExceptionHandler(DataOutOfLenghtException.class)
     public ResponseEntity<Map<String, String>> handleDataConstraintViolationException(
-            CategoryDataOutOfLenghtException dataConstraintViolationException) {
+            DataOutOfLenghtException dataConstraintViolationException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), dataConstraintViolationException.getMessage()));
     }
@@ -65,5 +65,19 @@ public class ControllerAdvisor {
         Map<String, String> errorResponse= Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(errorResponse);
+    }
+
+    @ExceptionHandler(BrandAlreadyExistsException.class)
+    public ResponseEntity<Map<String, String>> handleBrandAlreadyExistsException(
+            BrandAlreadyExistsException brandAlreadyExistsException) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), brandAlreadyExistsException.getMessage()));
+    }
+
+    @ExceptionHandler(BrandNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleBrandNotFoundException(
+            BrandNotFoundException brandNotFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), brandNotFoundException.getMessage()));
     }
 }

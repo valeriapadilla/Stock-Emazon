@@ -15,4 +15,14 @@ public class ApplicationConstant {
     public static final String CATEGORY_DESCRIPTION_SIZE_EXCEPTION = "Category's description out of length";
     public static final String CATEGORY_NAME_SIZE_EXCEPTION = "Category's name out of length";
 
+
+    public static final int BRAND_MIN_CHARACTERS_NAME = 1;
+    public static final int BRAND_MAX_CHARACTERS_NAME = 50;
+    public static final int BRAND_MIN_CHARACTERS_DESCRIPTION = 1;
+    public static final int BRAND_MAX_CHARACTERS_DESCRIPTION = 120;
+
+    public static final String BRAND_NAME_NULL_EXCEPTION = "Brand's name is null";
+    public static final String BRAND_DESCRIPTION_NULL_EXCEPTION = "Brand's description is null";
+    public static final String BRAND_DESCRIPTION_SIZE_EXCEPTION = "Brand's description out of length";
+    public static final String BRAND_NAME_SIZE_EXCEPTION = "Brand's name out of length";
 }

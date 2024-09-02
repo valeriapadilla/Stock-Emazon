@@ -1,14 +1,13 @@
 package com.example.stockemazon.domain.api.usecases;
 
 import com.example.stockemazon.domain.exceptions.CategoryAlreadyExistsException;
-import com.example.stockemazon.domain.exceptions.CategoryDataOutOfLenghtException;
+import com.example.stockemazon.domain.exceptions.DataOutOfLenghtException;
 import com.example.stockemazon.domain.exceptions.MissingAttributeException;
 import com.example.stockemazon.domain.exceptions.PaginationException;
 import com.example.stockemazon.domain.model.Category;
 import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.spi.ICategoryPersistencePort;
 import com.example.stockemazon.domain.usecases.CategoryUseCase;
-import com.example.stockemazon.domain.util.PaginationValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -52,7 +51,7 @@ class CategoryUseCaseTest {
         Category invalidCategory = new Category(null,"Category name too long to test for DataConstraintViolationException to be thrown",
                 "Everything related to electronics");
 
-        assertThrows(CategoryDataOutOfLenghtException.class, () -> {
+        assertThrows(DataOutOfLenghtException.class, () -> {
             categoryUseCase.saveCategory(invalidCategory);
         });
     }
@@ -63,7 +62,7 @@ class CategoryUseCaseTest {
                 "Valid category name",
                 "Description of the category that exceeds 90 characters to test that the Exception is thrown. very long, long, very long description");
 
-        assertThrows(CategoryDataOutOfLenghtException.class, () -> {
+        assertThrows(DataOutOfLenghtException.class, () -> {
             categoryUseCase.saveCategory(invalidCategory);
         });
     }
