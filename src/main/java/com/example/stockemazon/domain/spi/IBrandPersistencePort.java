@@ -9,5 +9,4 @@ public interface IBrandPersistencePort {
     void updateBrand(Brand brand);
     void deleteBrand(String name);
     PageCustom<Brand> getAllBrands(int page, int size, String sort, String sortBy);
-
 }
