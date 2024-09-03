@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@ControllerAdvice
 public class ControllerAdvisor {
 
     @ExceptionHandler(CategoryAlreadyExistsException.class)
