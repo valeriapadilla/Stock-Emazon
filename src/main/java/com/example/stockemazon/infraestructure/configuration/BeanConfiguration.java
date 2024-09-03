@@ -1,6 +1,7 @@
 package com.example.stockemazon.infraestructure.configuration;
 
 import com.example.stockemazon.application.dto.CategoryRequest;
+import com.example.stockemazon.application.mapper.IBrandRequestMapper;
 import com.example.stockemazon.application.mapper.ICategoryRequestMapper;
 import com.example.stockemazon.application.mapper.PaginationRequestMapper;
 import com.example.stockemazon.domain.api.IBrandServicePort;
@@ -28,43 +29,40 @@ public class BeanConfiguration {
     private final ICategoryEntityMapper categoryEntityMapper;
     private final ICategoryRequestMapper categoryRequestMapper;
 
-    private final IBrandEntityMapper brandEntityMapper;
+
     private final IBrandRepository brandRepository;
+    private final IBrandEntityMapper brandEntityMapper;
+    private final IBrandRequestMapper brandRequestMapper;
 
 
     @Bean
     public ICategoryPersistencePort categoryPersistencePort() {
-
         return new CategoryJpaAdapter(categoryRepository, categoryEntityMapper,pageMapper());
     }
 
-
-
     @Bean
     public ICategoryServicePort categoryServicePort() {
-
         return new CategoryUseCase(categoryPersistencePort());
     }
 
     @Bean
     public PageMapper pageMapper() {
-
-        return new PageMapper(categoryEntityMapper);
+        return new PageMapper(categoryEntityMapper,brandEntityMapper);
     }
 
     @Bean
     public PaginationRequestMapper paginationRequestMapper() {
-
-        return new PaginationRequestMapper(categoryRequestMapper);
+        return new PaginationRequestMapper(categoryRequestMapper,brandRequestMapper);
     }
 
     @Bean
     public IBrandPersistencePort brandPersistencePort(){
-        return new BrandJpaAdapter(brandEntityMapper,brandRepository);
+        return new BrandJpaAdapter(brandEntityMapper,brandRepository,pageMapper());
     }
 
     @Bean
     public IBrandServicePort brandServicePort() {
         return new BrandUseCase(brandPersistencePort());
     }
+
 }

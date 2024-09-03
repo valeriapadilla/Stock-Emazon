@@ -2,10 +2,17 @@ package com.example.stockemazon.infraestructure.output.jpa.adapter;
 
 import com.example.stockemazon.domain.exceptions.BrandAlreadyExistsException;
 import com.example.stockemazon.domain.model.Brand;
+import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.spi.IBrandPersistencePort;
 import com.example.stockemazon.infraestructure.output.jpa.entity.BrandEntity;
+import com.example.stockemazon.infraestructure.output.jpa.entity.CategoryEntity;
 import com.example.stockemazon.infraestructure.output.jpa.mapper.IBrandEntityMapper;
+import com.example.stockemazon.infraestructure.output.jpa.mapper.PageMapper;
 import com.example.stockemazon.infraestructure.output.jpa.repository.IBrandRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 
@@ -13,10 +20,13 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
 
     private final IBrandEntityMapper brandEntityMapper;
     private final IBrandRepository brandRepository;
+    private final PageMapper pageMapper;
 
-    public BrandJpaAdapter(IBrandEntityMapper brandEntityMapper, IBrandRepository brandRepository) {
+
+    public BrandJpaAdapter(IBrandEntityMapper brandEntityMapper, IBrandRepository brandRepository, PageMapper pageMapper) {
         this.brandEntityMapper = brandEntityMapper;
         this.brandRepository = brandRepository;
+        this.pageMapper = pageMapper;
     }
 
     @Override
@@ -47,5 +57,12 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
     @Override
     public void deleteBrand(String name) {
         brandRepository.deleteByName(name);
+    }
+
+    @Override
+    public PageCustom<Brand> getAllBrands(int page, int size, String sort, String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.fromString(sort), sortBy);
+        Page<BrandEntity> brandEntities = brandRepository.findAll(pageable);
+        return pageMapper.toPageCustomBrand(brandEntities);
     }
 }

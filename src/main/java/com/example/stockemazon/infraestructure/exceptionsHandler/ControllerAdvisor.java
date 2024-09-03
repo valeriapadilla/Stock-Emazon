@@ -5,20 +5,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@ControllerAdvice
 public class ControllerAdvisor {
 
     @ExceptionHandler(CategoryAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleCategoryAlreadyExistsException(
             CategoryAlreadyExistsException categoryAlreadyExistsException) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), categoryAlreadyExistsException.getMessage()));
+                .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), exceptionResponse.CATEGORY_ALREADY_EXITS.getMessage()));
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
@@ -71,7 +72,7 @@ public class ControllerAdvisor {
     public ResponseEntity<Map<String, String>> handleBrandAlreadyExistsException(
             BrandAlreadyExistsException brandAlreadyExistsException) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), brandAlreadyExistsException.getMessage()));
+                .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), exceptionResponse.BRAND_ALREADY_EXITS.getMessage()));
     }
 
     @ExceptionHandler(BrandNotFoundException.class)

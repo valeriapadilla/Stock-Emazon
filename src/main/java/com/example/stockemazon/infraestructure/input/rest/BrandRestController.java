@@ -2,7 +2,9 @@ package com.example.stockemazon.infraestructure.input.rest;
 
 
 import com.example.stockemazon.application.dto.BrandRequest;
+import com.example.stockemazon.application.dto.CategoryRequest;
 import com.example.stockemazon.application.handler.IBrandHandler;
+import com.example.stockemazon.domain.model.PageCustom;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -53,5 +55,23 @@ public class BrandRestController {
     public ResponseEntity<Void> deleteBrand(@PathVariable String name) {
         brandHandler.deleteBrand(name);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    @Operation(summary = "Retrieve all brands with pagination and sorting",
+            description = "This endpoint retrieves a paginated list of brands with optional sorting. You can specify the page number, page size, sort direction (ASC or DESC), and the field by which to sort (e.g., name or description).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved the list of brands"),
+            @ApiResponse(responseCode = "400", description = "Invalid pagination or sorting parameters"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    public ResponseEntity<PageCustom<BrandRequest>> getAllBrands(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "ASC") String sort,
+            @RequestParam(defaultValue = "name") String sortBy) {
+
+        PageCustom<BrandRequest> brands = brandHandler.getAllBrands(page, size, sort, sortBy);
+        return ResponseEntity.ok(brands);
     }
 }

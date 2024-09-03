@@ -3,8 +3,11 @@ package com.example.stockemazon.domain.usecases;
 import com.example.stockemazon.domain.api.IBrandServicePort;
 import com.example.stockemazon.domain.exceptions.*;
 import com.example.stockemazon.domain.model.Brand;
+import com.example.stockemazon.domain.model.Category;
+import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.spi.IBrandPersistencePort;
 import com.example.stockemazon.domain.util.DomainConstant;
+import com.example.stockemazon.domain.util.PaginationValidator;
 
 public class BrandUseCase implements IBrandServicePort {
 
@@ -48,6 +51,12 @@ public class BrandUseCase implements IBrandServicePort {
             throw new BrandNotFoundException(DomainConstant.BRAND_NOT_FOUND_EXCEPTION);
         }
         this.brandPersistencePort.deleteBrand(name);
+    }
+
+    @Override
+    public PageCustom<Brand> getAllBrands(int page, int size, String sort, String sortBy) {
+        PaginationValidator.validatePaginationParameters(page, size, sort, sortBy);
+        return this.brandPersistencePort.getAllBrands(page, size, sort, sortBy);
     }
 
 
