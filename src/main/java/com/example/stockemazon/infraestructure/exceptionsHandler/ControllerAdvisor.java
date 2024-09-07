@@ -81,4 +81,25 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), brandNotFoundException.getMessage()));
     }
+
+    @ExceptionHandler(TooManyCategoriesException.class)
+    public ResponseEntity<Map<String, String>> handleTooManyCategoriesException(
+            TooManyCategoriesException tooManyCategoriesException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), tooManyCategoriesException.getMessage()));
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<Map<String, String>> HandleProductNotFoundException(
+            ProductNotFoundException productNotFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), productNotFoundException.getMessage()));
+    }
+
+    @ExceptionHandler(DuplicateCategoryException.class)
+    public ResponseEntity<Map<String, String>> HandleDuplicateCategoryException(
+            DuplicateCategoryException duplicateCategoryException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(exceptionResponse.MESSAGE.getMessage(), duplicateCategoryException.getMessage()));
+    }
 }

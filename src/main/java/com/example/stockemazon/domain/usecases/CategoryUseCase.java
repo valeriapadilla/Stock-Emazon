@@ -46,15 +46,15 @@ public class CategoryUseCase implements ICategoryServicePort{
     }
 
     @Override
-    public void deleteCategory(String categoryName) {
-        if(!categoryPersistencePort.findByName(categoryName)){
+    public void deleteCategory(Long id) {
+        if(!categoryPersistencePort.existsById(id)){
             throw new CategoryNotFoundException(DomainConstant.CATEGORY_NOTFOUND_EXCEPTION);
         }
-        this.categoryPersistencePort.deleteCategory(categoryName);
+        this.categoryPersistencePort.deleteCategory(id);
     }
 
     @Override
-    public PageCustom<Category> getAllCategories(int page, int size, String sort, String sortBy) {
+    public PageCustom<Category> getAllCategories(Integer page, Integer size, String sort, String sortBy) {
         PaginationValidator.validatePaginationParameters(page, size, sort, sortBy);
         return this.categoryPersistencePort.getAllCategories(page, size, sort, sortBy);
     }

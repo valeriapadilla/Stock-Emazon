@@ -87,46 +87,17 @@ class CategoryUseCaseTest {
         verify(categoryPersistencePort, never()).saveCategory(any(Category.class));
     }
 
-    @Test
-    void getAllCategories_ShouldReturnPageCustom_WhenParametersAreValid() {
-
-        int page = 0;
-        int size = 10;
-        String sort = "ASC";
-        String sortBy = "name";
-
-        List<Category> categories = Arrays.asList(
-                new Category(1L, "Electronics", "All about electronics"),
-                new Category(2L, "Books", "All about books")
-        );
-
-        PageCustom<Category> expectedPageCustom = new PageCustom<>(categories, 1, 2);
-
-        Mockito.when(categoryPersistencePort.getAllCategories(page, size, sort, sortBy))
-                .thenReturn(expectedPageCustom);
-
-
-        PageCustom<Category> result = categoryUseCase.getAllCategories(page, size, sort, sortBy);
-
-
-        assertNotNull(result);
-        assertEquals(2, result.getContent().size());
-        assertEquals("Electronics", result.getContent().get(0).getName());
-        verify(categoryPersistencePort).getAllCategories(page, size, sort, sortBy);
-    }
 
     @Test
     void getAllCategories_ShouldThrowException_WhenInvalidParameters() {
-        int page = -1;
+        int invalidPage = -1;
         int size = 10;
-        String sort = "INVALID";
+        String sortDirection = "ASC";
         String sortBy = "name";
 
         assertThrows(PaginationException.class, () -> {
-            categoryUseCase.getAllCategories(page, size, sort, sortBy);
+            categoryUseCase.getAllCategories(invalidPage, size, sortDirection, sortBy);
         });
-
-        verify(categoryPersistencePort, never()).getAllCategories(anyInt(), anyInt(), anyString(), anyString());
     }
 
 

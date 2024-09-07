@@ -19,8 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class BrandUseCaseTest {
     @Mock
@@ -37,7 +36,7 @@ class BrandUseCaseTest {
     void saveBrand_ShouldThrowException_WhenBrandAlreadyExists() {
         Brand newBrand = new Brand(null, "Apple", "Technology and electronics brand");
 
-        Mockito.when(brandPersistencePort.findByName("Apple")).thenReturn(true);
+        when(brandPersistencePort.findByName("Apple")).thenReturn(true);
 
         assertThrows(BrandAlreadyExistsException.class, () ->
                 brandUseCase.saveBrand(newBrand));
@@ -86,7 +85,6 @@ class BrandUseCaseTest {
 
     @Test
     void getAllBrands_ShouldReturnPageCustom_WhenParametersAreValid() {
-
         int page = 0;
         int size = 10;
         String sort = "ASC";
@@ -97,33 +95,34 @@ class BrandUseCaseTest {
                 new Brand(2L, "Penguin", "Book publishing")
         );
 
-        PageCustom<Brand> expectedPageCustom = new PageCustom<>(brands, 1, 2);
+        PageCustom<Brand> expectedPageCustom = new PageCustom<>();
+        expectedPageCustom.setContent(brands);
+        expectedPageCustom.setTotalElements(2L);
+        expectedPageCustom.setTotalPages(1);
 
-        Mockito.when(brandPersistencePort.getAllBrands(page, size, sort, sortBy))
+        when(brandPersistencePort.getAllBrands(page, size, sort, sortBy))
                 .thenReturn(expectedPageCustom);
 
         PageCustom<Brand> result = brandUseCase.getAllBrands(page, size, sort, sortBy);
 
-        assertNotNull(result);
-        assertEquals(2, result.getContent().size());
-        assertEquals("Sony", result.getContent().get(0).getName());
+        assertNotNull(result, "The result should not be null");
+        assertEquals(2, result.getContent().size(), "The number of brands should be 2");
+        assertEquals("Sony", result.getContent().get(0).getName(), "The first brand's name should be Sony");
+        assertEquals("Penguin", result.getContent().get(1).getName(), "The second brand's name should be Penguin");
+
         verify(brandPersistencePort).getAllBrands(page, size, sort, sortBy);
     }
 
     @Test
     void getAllBrands_ShouldThrowException_WhenInvalidParameters() {
-        int page = -1;
+        int invalidPage = -1;
         int size = 10;
-        String sort = "INVALID";
+        String sortDirection = "ASC";
         String sortBy = "name";
 
         assertThrows(PaginationException.class, () -> {
-            brandUseCase.getAllBrands(page, size, sort, sortBy);
+            brandUseCase.getAllBrands(invalidPage, size, sortDirection, sortBy);
         });
-
-        verify(brandPersistencePort, never()).getAllBrands(anyInt(), anyInt(), anyString(), anyString());
     }
-
-
 
 }

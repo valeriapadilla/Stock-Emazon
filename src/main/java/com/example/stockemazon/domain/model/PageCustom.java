@@ -4,13 +4,13 @@ import java.util.List;
 
 public class PageCustom<T> {
     private List<T> content;
-    private int totalPages;
+    private Integer totalPages;
     private long totalElements;
+    private Boolean hasPreviousPage;
+    private Boolean hasNextPage;
 
-    public PageCustom(List<T> content, int totalPages, long totalElements) {
-        this.content = content;
-        this.totalPages = totalPages;
-        this.totalElements = totalElements;
+    public PageCustom(){
+
     }
 
     public List<T> getContent()
@@ -38,9 +38,17 @@ public class PageCustom<T> {
         return totalPages;
     }
 
-    public void setTotalPages(int pageSize)
+    public void setTotalPages(Integer totalPages)
     {
         this.totalPages = totalPages;
     }
+
+    public Boolean getHasNextPage() {return hasNextPage;}
+
+    public void setHasNextPage(Boolean hasNextPage) {this.hasNextPage = hasNextPage;}
+
+    public Boolean getHasPreviousPage() {return hasPreviousPage;}
+
+    public void setHasPreviousPage(Boolean hasPreviousPage) {this.hasPreviousPage = hasPreviousPage;}
 
 }

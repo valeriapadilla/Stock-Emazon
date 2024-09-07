@@ -6,6 +6,7 @@ import com.example.stockemazon.domain.model.Brand;
 import com.example.stockemazon.domain.model.Category;
 import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.spi.IBrandPersistencePort;
+import com.example.stockemazon.domain.spi.ICategoryPersistencePort;
 import com.example.stockemazon.domain.util.DomainConstant;
 import com.example.stockemazon.domain.util.PaginationValidator;
 
@@ -46,15 +47,15 @@ public class BrandUseCase implements IBrandServicePort {
     }
 
     @Override
-    public void deleteBrand(String name) {
-        if(!brandPersistencePort.findByName(name)){
+    public void deleteBrand(Long id) {
+        if(!brandPersistencePort.exitsById(id)){
             throw new BrandNotFoundException(DomainConstant.BRAND_NOT_FOUND_EXCEPTION);
         }
-        this.brandPersistencePort.deleteBrand(name);
+        this.brandPersistencePort.deleteBrand(id);
     }
 
     @Override
-    public PageCustom<Brand> getAllBrands(int page, int size, String sort, String sortBy) {
+    public PageCustom<Brand> getAllBrands(Integer page, Integer size, String sort, String sortBy) {
         PaginationValidator.validatePaginationParameters(page, size, sort, sortBy);
         return this.brandPersistencePort.getAllBrands(page, size, sort, sortBy);
     }

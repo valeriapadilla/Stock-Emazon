@@ -7,8 +7,8 @@ import com.example.stockemazon.domain.model.Product;
 import java.util.List;
 
 public interface IProductPersistencePort {
-    boolean isCategoryRepeat (List<Category> categories);
     void saveProduct(Product product);
     void updateProduct(Product product);
-    void deleteProduct(String name);
+    void deleteProduct(Long id);
+    boolean existsById(Long id);
 }

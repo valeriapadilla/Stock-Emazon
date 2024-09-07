@@ -13,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.List;
 import java.util.Optional;
 
 public class CategoryJpaAdapter implements ICategoryPersistencePort {
@@ -42,7 +43,7 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
     }
 
     @Override
-    public PageCustom<Category> getAllCategories(int page, int size, String sort, String sortBy) {
+    public PageCustom<Category> getAllCategories(Integer page, Integer size, String sort, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.fromString(sort), sortBy);
         Page<CategoryEntity> categoryEntities = categoryRepository.findAll(pageable);
         return pageMapper.toPageCustomCategory(categoryEntities);
@@ -60,7 +61,12 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
     }
 
     @Override
-    public void deleteCategory(String categoryName) {
-        categoryRepository.deleteByName(categoryName);
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return categoryRepository.findById(id).isPresent();
     }
 }

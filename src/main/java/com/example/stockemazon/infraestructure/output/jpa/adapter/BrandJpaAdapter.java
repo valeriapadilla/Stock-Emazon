@@ -5,7 +5,6 @@ import com.example.stockemazon.domain.model.Brand;
 import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.spi.IBrandPersistencePort;
 import com.example.stockemazon.infraestructure.output.jpa.entity.BrandEntity;
-import com.example.stockemazon.infraestructure.output.jpa.entity.CategoryEntity;
 import com.example.stockemazon.infraestructure.output.jpa.mapper.IBrandEntityMapper;
 import com.example.stockemazon.infraestructure.output.jpa.mapper.PageMapper;
 import com.example.stockemazon.infraestructure.output.jpa.repository.IBrandRepository;
@@ -55,14 +54,19 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
     }
 
     @Override
-    public void deleteBrand(String name) {
-        brandRepository.deleteByName(name);
+    public void deleteBrand(Long id) {
+        brandRepository.deleteById(id);
     }
 
     @Override
-    public PageCustom<Brand> getAllBrands(int page, int size, String sort, String sortBy) {
+    public PageCustom<Brand> getAllBrands(Integer page, Integer size, String sort, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.fromString(sort), sortBy);
         Page<BrandEntity> brandEntities = brandRepository.findAll(pageable);
         return pageMapper.toPageCustomBrand(brandEntities);
+    }
+
+    @Override
+    public boolean exitsById(Long id) {
+        return brandRepository.findById(id).isPresent();
     }
 }

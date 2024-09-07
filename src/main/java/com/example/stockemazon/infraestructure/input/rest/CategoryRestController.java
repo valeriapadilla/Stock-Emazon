@@ -1,6 +1,7 @@
 package com.example.stockemazon.infraestructure.input.rest;
 
 import com.example.stockemazon.application.dto.CategoryRequest;
+import com.example.stockemazon.application.dto.CategoryResponse;
 import com.example.stockemazon.application.handler.ICategoryHandler;
 import com.example.stockemazon.domain.model.PageCustom;
 import jakarta.validation.Valid;
@@ -45,14 +46,14 @@ public class CategoryRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "Delete a category", description = "Deletes a category by its name.")
+    @Operation(summary = "Delete a category", description = "Deletes a category by its id.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Category deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Category not found")
     })
-    @DeleteMapping("/{categoryName}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable String categoryName) {
-        categoryHandler.deleteCategory(categoryName);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+        categoryHandler.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -64,13 +65,13 @@ public class CategoryRestController {
             @ApiResponse(responseCode = "400", description = "Invalid pagination or sorting parameters"),
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<PageCustom<CategoryRequest>> getAllCategories(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+    public ResponseEntity<PageCustom<CategoryResponse>> getAllCategories(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
             @RequestParam(defaultValue = "ASC") String sort,
             @RequestParam(defaultValue = "name") String sortBy) {
 
-        PageCustom<CategoryRequest> categories = categoryHandler.getAllCategories(page, size, sort, sortBy);
+        PageCustom<CategoryResponse> categories = categoryHandler.getAllCategories(page, size, sort, sortBy);
         return ResponseEntity.ok(categories);
     }
 }

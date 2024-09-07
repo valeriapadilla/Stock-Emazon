@@ -26,7 +26,9 @@ public class DomainConstant {
     public static final String BRAND_DATA_OUT_OF_LENGHT_EXCEPTION = "Values of brand out of lenght";
     public static final String BRAND_NOT_FOUND_EXCEPTION = "The brand does not exist";
 
-
+    public static final String PRODUCT_NOT_FOUND_EXCEPTION = "The Product does not exist";
+    public static final String TOO_MANY_CATEGORIES_EXCEPTION = "A product can have a maximum of 3 categories.";
+    public static final String DUPLICATE_CATEGORY_EXCEPTION = "The category IDs contain duplicate values.";
 
 
 }

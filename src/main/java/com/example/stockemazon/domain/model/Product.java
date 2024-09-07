@@ -7,16 +7,18 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private Long quantity;
+    private Integer quantity;
     private BigDecimal price;
+    private Brand brand;
     private List<Category> categories;
 
-    public Product(Long id, String name, String description, Long quantity, BigDecimal price, List<Category> categories) {
+    public Product(Long id, String name, String description, Integer quantity, BigDecimal price, Brand brand, List<Category> categories) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.quantity = quantity;
         this.price = price;
+        this.brand = brand;
         this.categories = categories;
     }
 
@@ -32,7 +34,7 @@ public class Product {
         return description;
     }
 
-    public Long getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
@@ -53,7 +55,7 @@ public class Product {
         this.description = description;
     }
 
-    public void setQuantity(Long quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -67,6 +69,13 @@ public class Product {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
 }

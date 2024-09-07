@@ -7,6 +7,7 @@ public interface IBrandPersistencePort {
     boolean findByName(String name);
     void saveBrand(Brand brand);
     void updateBrand(Brand brand);
-    void deleteBrand(String name);
-    PageCustom<Brand> getAllBrands(int page, int size, String sort, String sortBy);
+    void deleteBrand(Long id);
+    PageCustom<Brand> getAllBrands(Integer page, Integer size, String sort, String sortBy);
+    boolean exitsById(Long id);
 }
