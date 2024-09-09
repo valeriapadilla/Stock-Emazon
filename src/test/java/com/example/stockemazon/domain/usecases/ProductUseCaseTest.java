@@ -6,15 +6,19 @@ import com.example.stockemazon.domain.exceptions.DuplicateCategoryException;
 import com.example.stockemazon.domain.exceptions.TooManyCategoriesException;
 import com.example.stockemazon.domain.model.Brand;
 import com.example.stockemazon.domain.model.Category;
+import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.model.Product;
 import com.example.stockemazon.domain.spi.IBrandPersistencePort;
 import com.example.stockemazon.domain.spi.ICategoryPersistencePort;
 import com.example.stockemazon.domain.spi.IProductPersistencePort;
+import com.example.stockemazon.domain.util.DomainConstant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -114,4 +118,78 @@ class ProductUseCaseTest {
         verify(productPersistencePort, never()).saveProduct(any(Product.class));
     }
 
+
+    @Test
+    void testGetAllProducts_ValidParameters_ReturnsProducts() {
+        int page = 0;
+        int pageSize = 10;
+        String sort = "ASC";
+        String sortBy = "name";
+        String brandName = "BrandA";
+        String categoryName = "CategoryA";
+
+        Product product = new Product();
+        Page<Product> productPage = new PageImpl<>(List.of(product));
+        PageCustom<Product> pageCustom = new PageCustom<>();
+        pageCustom.setContent(productPage.getContent());
+        pageCustom.setTotalPages(productPage.getTotalPages());
+        pageCustom.setTotalElements(productPage.getTotalElements());
+        pageCustom.setHasNextPage(productPage.hasNext());
+        pageCustom.setHasPreviousPage(productPage.hasPrevious());
+
+        when(categoryPersistencePort.findByName(categoryName)).thenReturn(true);
+        when(brandPersistencePort.findByName(brandName)).thenReturn(true);
+        when(productPersistencePort.getAllProducts(page, pageSize, sort, sortBy, brandName, categoryName)).thenReturn(pageCustom);
+
+        PageCustom<Product> result = productUseCase.getAllProducts(page, pageSize, sort, sortBy, brandName, categoryName);
+
+        assertNotNull(result);
+        assertEquals(pageCustom.getContent().size(), result.getContent().size());
+        verify(categoryPersistencePort).findByName(categoryName);
+        verify(brandPersistencePort).findByName(brandName);
+        verify(productPersistencePort).getAllProducts(page, pageSize, sort, sortBy, brandName, categoryName);
+    }
+
+    @Test
+    void testGetAllProducts_CategoryNotFound_ThrowsException() {
+        int page = 0;
+        int pageSize = 10;
+        String sort = "ASC";
+        String sortBy = "name";
+        String brandName = "BrandA";
+        String categoryName = "InvalidCategory";
+
+        when(categoryPersistencePort.findByName(categoryName)).thenReturn(false);
+
+        CategoryNotFoundException thrown = assertThrows(
+                CategoryNotFoundException.class,
+                () -> productUseCase.getAllProducts(page, pageSize, sort, sortBy, brandName, categoryName)
+        );
+        assertEquals(DomainConstant.CATEGORY_NOTFOUND_EXCEPTION + categoryName, thrown.getMessage());
+        verify(categoryPersistencePort).findByName(categoryName);
+        verifyNoInteractions(brandPersistencePort);
+        verifyNoInteractions(productPersistencePort);
+    }
+
+    @Test
+    void testGetAllProducts_BrandNotFound_ThrowsException() {
+        int page = 0;
+        int pageSize = 10;
+        String sort = "ASC";
+        String sortBy = "name";
+        String brandName = "InvalidBrand";
+        String categoryName = "CategoryA";
+
+        when(categoryPersistencePort.findByName(categoryName)).thenReturn(true);
+        when(brandPersistencePort.findByName(brandName)).thenReturn(false);
+
+        BrandNotFoundException thrown = assertThrows(
+                BrandNotFoundException.class,
+                () -> productUseCase.getAllProducts(page, pageSize, sort, sortBy, brandName, categoryName)
+        );
+        assertEquals(DomainConstant.BRAND_NOT_FOUND_EXCEPTION + brandName, thrown.getMessage());
+        verify(categoryPersistencePort).findByName(categoryName);
+        verify(brandPersistencePort).findByName(brandName);
+        verifyNoInteractions(productPersistencePort);
+    }
 }

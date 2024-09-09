@@ -3,11 +3,13 @@ package com.example.stockemazon.domain.usecases;
 import com.example.stockemazon.domain.api.IProductServicePort;
 import com.example.stockemazon.domain.exceptions.*;
 import com.example.stockemazon.domain.model.Category;
+import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.model.Product;
 import com.example.stockemazon.domain.spi.IBrandPersistencePort;
 import com.example.stockemazon.domain.spi.ICategoryPersistencePort;
 import com.example.stockemazon.domain.spi.IProductPersistencePort;
 import com.example.stockemazon.domain.util.DomainConstant;
+import com.example.stockemazon.domain.util.PaginationValidator;
 
 import java.util.HashSet;
 import java.util.List;
@@ -34,7 +36,7 @@ public class ProductUseCase implements IProductServicePort {
 
         List<Category> categories = product.getCategories();
 
-        if (categories.size() > 3) {
+        if (categories.size() > DomainConstant.MAX_CATEGORIES_PRODUCT) {
             throw new TooManyCategoriesException(DomainConstant.TOO_MANY_CATEGORIES_EXCEPTION);
         }
 
@@ -71,5 +73,18 @@ public class ProductUseCase implements IProductServicePort {
             throw new ProductNotFoundException(DomainConstant.PRODUCT_NOT_FOUND_EXCEPTION);
         }
         this.productPersistencePort.deleteProduct(id);
+    }
+
+    @Override
+    public PageCustom<Product> getAllProducts(Integer page, Integer pageSize, String sort, String sortBy, String brandName, String categoryName) {
+        PaginationValidator.validatePaginationParameters(page,pageSize,sort,sortBy);
+        if (categoryName != null && !categoryName.isBlank() && !categoryPersistencePort.findByName(categoryName)) {
+            throw new CategoryNotFoundException(DomainConstant.CATEGORY_NOTFOUND_EXCEPTION + categoryName);
+        }
+
+        if (brandName != null && !brandName.isBlank() && !brandPersistencePort.findByName(brandName)) {
+            throw new BrandNotFoundException(DomainConstant.BRAND_NOT_FOUND_EXCEPTION + brandName);
+        }
+        return productPersistencePort.getAllProducts(page,pageSize,sort,sortBy,brandName,categoryName);
     }
 }

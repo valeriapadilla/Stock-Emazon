@@ -6,6 +6,7 @@ import com.example.stockemazon.application.dto.BrandResponse;
 import com.example.stockemazon.application.dto.CategoryRequest;
 import com.example.stockemazon.application.handler.IBrandHandler;
 import com.example.stockemazon.domain.model.PageCustom;
+import com.example.stockemazon.infraestructure.utils.InfraestructureConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -67,10 +68,10 @@ public class BrandRestController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<PageCustom<BrandResponse>> getAllBrands(
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam(defaultValue = "ASC") String sort,
-            @RequestParam(defaultValue = "name") String sortBy) {
+            @RequestParam(defaultValue = InfraestructureConstants.PAGE) Integer page,
+            @RequestParam(defaultValue = InfraestructureConstants.SIZE) Integer size,
+            @RequestParam(defaultValue = InfraestructureConstants.SORT) String sort,
+            @RequestParam(defaultValue = InfraestructureConstants.SORTBY) String sortBy)  {
 
         PageCustom<BrandResponse> brands = brandHandler.getAllBrands(page, size, sort, sortBy);
         return ResponseEntity.ok(brands);

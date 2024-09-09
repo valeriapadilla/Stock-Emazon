@@ -26,10 +26,10 @@ public class BrandUseCase implements IBrandServicePort {
         if (brand.getDescription() == null || brand.getDescription().isEmpty()) {
             throw new MissingAttributeException(DomainConstant.BRAND_MISSING_ATTRIBUTE_EXCEPTION);
         }
-        if(brand.getName().length() > 50) {
+        if(brand.getName().length() > DomainConstant.BRAND_MAX_CHARACTERS_NAME) {
             throw new DataOutOfLenghtException(DomainConstant.BRAND_DATA_OUT_OF_LENGHT_EXCEPTION);
         }
-        if(brand.getDescription().length() > 120) {
+        if(brand.getDescription().length() > DomainConstant.BRAND_MAX_CHARACTERS_DESCRIPTION) {
             throw new DataOutOfLenghtException(DomainConstant.BRAND_DATA_OUT_OF_LENGHT_EXCEPTION);
         }
         if (brandPersistencePort.findByName(brand.getName())) {

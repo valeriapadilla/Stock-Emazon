@@ -4,6 +4,7 @@ import com.example.stockemazon.application.dto.CategoryRequest;
 import com.example.stockemazon.application.dto.CategoryResponse;
 import com.example.stockemazon.application.handler.ICategoryHandler;
 import com.example.stockemazon.domain.model.PageCustom;
+import com.example.stockemazon.infraestructure.utils.InfraestructureConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -66,10 +67,10 @@ public class CategoryRestController {
             @ApiResponse(responseCode = "500", description = "Internal server error")
     })
     public ResponseEntity<PageCustom<CategoryResponse>> getAllCategories(
-            @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "10") Integer size,
-            @RequestParam(defaultValue = "ASC") String sort,
-            @RequestParam(defaultValue = "name") String sortBy) {
+            @RequestParam(defaultValue = InfraestructureConstants.PAGE) Integer page,
+            @RequestParam(defaultValue = InfraestructureConstants.SIZE) Integer size,
+            @RequestParam(defaultValue = InfraestructureConstants.SORT) String sort,
+            @RequestParam(defaultValue = InfraestructureConstants.SORTBY) String sortBy) {
 
         PageCustom<CategoryResponse> categories = categoryHandler.getAllCategories(page, size, sort, sortBy);
         return ResponseEntity.ok(categories);

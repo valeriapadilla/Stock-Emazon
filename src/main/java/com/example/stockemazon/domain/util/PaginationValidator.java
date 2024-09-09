@@ -10,11 +10,11 @@ public class PaginationValidator {
     private static final List<String> ALLOWED_SORT_BY_FIELDS = Arrays.asList(DomainConstant.NAME, DomainConstant.DESCRIPTION);
 
     public static void validatePaginationParameters(int page, int size, String sort, String sortBy) {
-        if (page < 0) {
+        if (page < DomainConstant.ZERO) {
             throw new PaginationException(DomainConstant.PAGE_INDEX_NEGATIVE_ERROR);
         }
 
-        if (size < 0) {
+        if (size < DomainConstant.ZERO) {
             throw new PaginationException(DomainConstant.PAGE_SIZE_NEGATIVE_ERROR);
         }
 

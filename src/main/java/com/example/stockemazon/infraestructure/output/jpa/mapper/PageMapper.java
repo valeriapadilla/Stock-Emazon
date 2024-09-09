@@ -4,20 +4,22 @@ package com.example.stockemazon.infraestructure.output.jpa.mapper;
 import com.example.stockemazon.domain.model.Brand;
 import com.example.stockemazon.domain.model.Category;
 import com.example.stockemazon.domain.model.PageCustom;
+import com.example.stockemazon.domain.model.Product;
 import com.example.stockemazon.infraestructure.output.jpa.entity.BrandEntity;
 import com.example.stockemazon.infraestructure.output.jpa.entity.CategoryEntity;
+import com.example.stockemazon.infraestructure.output.jpa.entity.ProductEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring",
-        uses = {ICategoryEntityMapper.class, IBrandEntityMapper.class })
+        uses = {ICategoryEntityMapper.class, IBrandEntityMapper.class, IProductEntityMapper.class })
 public interface PageMapper {
    ICategoryEntityMapper CATEGORY_ENTITY_MAPPER = Mappers.getMapper(ICategoryEntityMapper.class);
    IBrandEntityMapper BRAND_ENTITY_MAPPER = Mappers.getMapper(IBrandEntityMapper.class);
+   IProductEntityMapper PRODUCT_ENTITY_MAPPER = Mappers.getMapper(IProductEntityMapper.class);
 
     default PageCustom<Category> toPageCustomCategory(Page<CategoryEntity> page) {
         PageCustom<Category> pageCustom = new PageCustom<>();
@@ -49,4 +51,20 @@ public interface PageMapper {
 
         return pageCustom;
     }
+
+    default PageCustom<Product> toPageCustomProduct(Page<ProductEntity> page){
+        PageCustom<Product> pageCustom = new PageCustom<>();
+
+        List<Product> content = page.getContent().stream()
+                .map(PRODUCT_ENTITY_MAPPER::toProduct)
+                .toList();
+
+        pageCustom.setContent(content);
+        pageCustom.setTotalElements(page.getTotalElements());
+        pageCustom.setTotalPages(page.getTotalPages());
+        pageCustom.setHasNextPage(page.hasNext());
+        pageCustom.setHasPreviousPage(page.hasPrevious());
+        return pageCustom;
+    }
+
 }

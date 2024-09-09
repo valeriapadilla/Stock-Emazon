@@ -22,6 +22,8 @@ public class Product {
         this.categories = categories;
     }
 
+    public Product() {}
+
     public Long getId() {
         return id;
     }

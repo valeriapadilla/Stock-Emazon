@@ -60,7 +60,7 @@ public class BeanConfiguration {
 
     @Bean
     public IProductPersistencePort productPersistencePort() {
-        return new ProductJpaAdapter(productEntityMapper,brandRepository,categoryRepository,productRepository);
+        return new ProductJpaAdapter(productEntityMapper,brandRepository,categoryRepository,productRepository,pageMapper);
     }
 
     @Bean

@@ -25,10 +25,10 @@ public class CategoryUseCase implements ICategoryServicePort{
         if (category.getDescription() == null || category.getDescription().isEmpty()) {
             throw new MissingAttributeException(DomainConstant.CATEGORY_MISSING_ATTRIBUTE_EXCEPTION);
         }
-        if(category.getName().length() > 50) {
+        if(category.getName().length() > DomainConstant.CATEGORY_MAX_CHARACTERS_NAME) {
             throw new DataOutOfLenghtException(DomainConstant.CATEGORY_DATA_OUT_OF_LENGHT_EXCEPTION);
         }
-        if(category.getDescription().length() > 90) {
+        if(category.getDescription().length() > DomainConstant.CATEGORY_MAX_CHARACTERS_DESCRIPTION) {
             throw new DataOutOfLenghtException(DomainConstant.CATEGORY_DATA_OUT_OF_LENGHT_EXCEPTION);
         }
         if (categoryPersistencePort.findByName(category.getName())) {
