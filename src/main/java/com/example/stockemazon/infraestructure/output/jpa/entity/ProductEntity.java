@@ -35,7 +35,7 @@ public class ProductEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id", nullable = false)
-    private BrandEntity brand;
+    private BrandEntity brandEntity;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

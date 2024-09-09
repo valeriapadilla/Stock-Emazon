@@ -45,7 +45,7 @@ public class ProductJpaAdapter implements IProductPersistencePort {
         if(!optionalBrandEntity.isPresent()) {
             throw new BrandNotFoundException("Brand with that ID not found");
         }
-        productEntity.setBrand(optionalBrandEntity.get());
+        productEntity.setBrandEntity(optionalBrandEntity.get());
         productEntity.setProductCategories(categoryEntities);
         this.productRepository.save(productEntity);
     }
@@ -76,11 +76,10 @@ public class ProductJpaAdapter implements IProductPersistencePort {
         }
 
         if (categoryName != null && !categoryName.isEmpty()) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("categories").get("name"), categoryName));
+            spec = spec.and((root, query, cb) -> cb.equal(root.join("productCategories").get("name"), categoryName));
         }
 
         Page<ProductEntity> productEntities = productRepository.findAll(spec,pageable);
         return pageMapper.toPageCustomProduct(productEntities);
-
     }
 }

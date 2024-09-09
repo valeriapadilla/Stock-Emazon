@@ -9,11 +9,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface IProductEntityMapper {
-    @Mapping(source = "brand", target = "brand")
+    @Mapping(source = "brand", target = "brandEntity")
     @Mapping(source = "categories", target = "productCategories")
     ProductEntity toEntity(Product product);
 
-    @Mapping(source = "brand", target = "brand")
+    @Mapping(source = "brandEntity", target = "brand")
     @Mapping(source = "productCategories", target = "categories")
     Product toProduct(ProductEntity productEntity);
 
