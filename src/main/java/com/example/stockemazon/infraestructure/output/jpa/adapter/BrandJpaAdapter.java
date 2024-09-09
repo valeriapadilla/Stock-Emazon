@@ -43,22 +43,6 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
     }
 
     @Override
-    public void updateBrand(Brand brand) {
-        Optional<BrandEntity> optionalBrandEntity = brandRepository.findByName(brand.getName());
-
-        if (optionalBrandEntity.isPresent()) {
-            BrandEntity brandEntity = optionalBrandEntity.get();
-            brandEntity.setDescription(brand.getDescription());
-            brandRepository.save(brandEntity);
-        }
-    }
-
-    @Override
-    public void deleteBrand(Long id) {
-        brandRepository.deleteById(id);
-    }
-
-    @Override
     public PageCustom<Brand> getAllBrands(Integer page, Integer size, String sort, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.fromString(sort), sortBy);
         Page<BrandEntity> brandEntities = brandRepository.findAll(pageable);

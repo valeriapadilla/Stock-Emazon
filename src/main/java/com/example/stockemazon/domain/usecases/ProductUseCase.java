@@ -60,22 +60,6 @@ public class ProductUseCase implements IProductServicePort {
     }
 
     @Override
-    public void updateProduct(Product product) {
-        if(!productPersistencePort.existsById(product.getId())){
-            throw new ProductNotFoundException(DomainConstant.PRODUCT_NOT_FOUND_EXCEPTION);
-        }
-        this.productPersistencePort.updateProduct(product);
-    }
-
-    @Override
-    public void deleteProduct(Long id) {
-        if(!productPersistencePort.existsById(id)){
-            throw new ProductNotFoundException(DomainConstant.PRODUCT_NOT_FOUND_EXCEPTION);
-        }
-        this.productPersistencePort.deleteProduct(id);
-    }
-
-    @Override
     public PageCustom<Product> getAllProducts(Integer page, Integer pageSize, String sort, String sortBy, String brandName, String categoryName) {
         PaginationValidator.validatePaginationParameters(page,pageSize,sort,sortBy);
         if (categoryName != null && !categoryName.isBlank() && !categoryPersistencePort.findByName(categoryName)) {

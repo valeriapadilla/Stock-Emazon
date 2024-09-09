@@ -37,29 +37,6 @@ public class ProductRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(summary = "Update an existing product", description = "Updates an existing product.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Product updated successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "404", description = "Product not found")
-    })
-    @PutMapping("/")
-    public ResponseEntity<Void> updateProduct(@Valid @RequestBody ProductRequest productRequest) {
-        productHandler.updateProduct(productRequest);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "Delete a product", description = "Deletes a product by its id.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Product deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Product not found")
-    })
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
-        productHandler.deleteProduct(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping
     @Operation(summary = "Retrieve all Product with pagination and sorting include a filter of brand or categories",
             description = "This endpoint retrieves a paginated list of categories with optional sorting. You can specify the page number, page size, sort direction (ASC or DESC), the field by which to sort (productName, BrandName, categoryName) and specify the name of the brand or the category.")

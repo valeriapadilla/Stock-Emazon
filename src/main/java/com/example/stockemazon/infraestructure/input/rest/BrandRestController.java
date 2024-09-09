@@ -36,29 +36,6 @@ public class BrandRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(summary = "Update an existing brand", description = "Updates an existing brand.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Brand updated successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "404", description = "Brand not found")
-    })
-    @PutMapping("/")
-    public ResponseEntity<Void> updateBrand(@Valid @RequestBody BrandRequest brandRequest) {
-        brandHandler.updateBrand(brandRequest);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "Delete a brand", description = "Deletes a brand by its id.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Brand deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Brand not found")
-    })
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
-        brandHandler.deleteBrand(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping
     @Operation(summary = "Retrieve all brands with pagination and sorting",
             description = "This endpoint retrieves a paginated list of brands with optional sorting. You can specify the page number, page size, sort direction (ASC or DESC), and the field by which to sort (e.g., name or description).")

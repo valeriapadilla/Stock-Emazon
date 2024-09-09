@@ -3,10 +3,8 @@ package com.example.stockemazon.domain.usecases;
 import com.example.stockemazon.domain.api.IBrandServicePort;
 import com.example.stockemazon.domain.exceptions.*;
 import com.example.stockemazon.domain.model.Brand;
-import com.example.stockemazon.domain.model.Category;
 import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.spi.IBrandPersistencePort;
-import com.example.stockemazon.domain.spi.ICategoryPersistencePort;
 import com.example.stockemazon.domain.util.DomainConstant;
 import com.example.stockemazon.domain.util.PaginationValidator;
 
@@ -36,22 +34,6 @@ public class BrandUseCase implements IBrandServicePort {
             throw new BrandAlreadyExistsException();
         }
         this.brandPersistencePort.saveBrand(brand);
-    }
-
-    @Override
-    public void updateBrand(Brand brand) {
-        if(!brandPersistencePort.findByName(brand.getName())){
-            throw new BrandNotFoundException(DomainConstant.BRAND_NOT_FOUND_EXCEPTION);
-        }
-        this.brandPersistencePort.updateBrand(brand);
-    }
-
-    @Override
-    public void deleteBrand(Long id) {
-        if(!brandPersistencePort.exitsById(id)){
-            throw new BrandNotFoundException(DomainConstant.BRAND_NOT_FOUND_EXCEPTION);
-        }
-        this.brandPersistencePort.deleteBrand(id);
     }
 
     @Override

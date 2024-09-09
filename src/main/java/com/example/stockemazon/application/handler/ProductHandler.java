@@ -51,17 +51,6 @@ public class ProductHandler implements IProductHandler {
     }
 
     @Override
-    public void updateProduct(ProductRequest productRequest) {
-        Product product = productRequestMapper.toProduct(productRequest);
-        productServicePort.updateProduct(product);
-    }
-
-    @Override
-    public void deleteProduct(Long id) {
-        productServicePort.deleteProduct(id);
-    }
-
-    @Override
     public PageCustom<ProductResponse> getAllProducts(Integer page, Integer pagesize, String sort, String orderBy, String brandName, String categoryName) {
         PageCustom<Product> productPage = this.productServicePort.getAllProducts(page, pagesize, sort, orderBy, brandName, categoryName);
         return paginationResponseMapper.toPageCustomProductResponse(productPage);

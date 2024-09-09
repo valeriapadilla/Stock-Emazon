@@ -11,7 +11,5 @@ public interface ICategoryPersistencePort {
     boolean findByName(String name);
     void saveCategory(Category category);
     PageCustom<Category> getAllCategories(Integer page, Integer size, String sort, String sortBy);
-    void updateCategory(Category category);
-    void deleteCategory(Long id);
     boolean existsById(Long id);
 }

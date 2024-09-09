@@ -31,17 +31,6 @@ public class BrandHandler implements IBrandHandler{
     }
 
     @Override
-    public void updateBrand(BrandRequest brandRequest) {
-        Brand brand = brandRequestMapper.toBrand(brandRequest);
-        brandServicePort.updateBrand(brand);
-    }
-
-    @Override
-    public void deleteBrand(Long id) {
-        brandServicePort.deleteBrand(id);
-    }
-
-    @Override
     public PageCustom<BrandResponse> getAllBrands(Integer page, Integer size, String sort, String sortBy) {
         PageCustom<Brand> brandPage = brandServicePort.getAllBrands(page, size, sort, sortBy);
         return paginationResponseMapper.toPageCustomBrandResponse(brandPage);

@@ -38,22 +38,6 @@ public class CategoryUseCase implements ICategoryServicePort{
     }
 
     @Override
-    public void updateCategory(Category category) {
-        if(!categoryPersistencePort.findByName(category.getName())){
-            throw new CategoryNotFoundException(DomainConstant.CATEGORY_NOTFOUND_EXCEPTION);
-        }
-        this.categoryPersistencePort.updateCategory(category);
-    }
-
-    @Override
-    public void deleteCategory(Long id) {
-        if(!categoryPersistencePort.existsById(id)){
-            throw new CategoryNotFoundException(DomainConstant.CATEGORY_NOTFOUND_EXCEPTION);
-        }
-        this.categoryPersistencePort.deleteCategory(id);
-    }
-
-    @Override
     public PageCustom<Category> getAllCategories(Integer page, Integer size, String sort, String sortBy) {
         PaginationValidator.validatePaginationParameters(page, size, sort, sortBy);
         return this.categoryPersistencePort.getAllCategories(page, size, sort, sortBy);

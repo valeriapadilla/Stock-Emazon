@@ -1,8 +1,6 @@
 package com.example.stockemazon.application.dto;
 
 import com.example.stockemazon.application.util.ApplicationConstant;
-import com.example.stockemazon.domain.model.Brand;
-import com.example.stockemazon.domain.model.Category;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;

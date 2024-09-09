@@ -7,7 +7,5 @@ import com.example.stockemazon.domain.model.Product;
 
 public interface IProductHandler {
     void saveProduct(ProductRequest productRequest);
-    void updateProduct(ProductRequest productRequest);
-    void deleteProduct(Long id);
     PageCustom<ProductResponse> getAllProducts(Integer page, Integer pagesize, String sort, String orderBy, String brandName, String categoryName);
 }

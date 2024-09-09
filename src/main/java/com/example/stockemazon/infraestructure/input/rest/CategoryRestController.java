@@ -35,29 +35,6 @@ public class CategoryRestController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @Operation(summary = "Update an existing category", description = "Updates an existing category.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Category updated successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "404", description = "Category not found")
-    })
-    @PutMapping("/")
-    public ResponseEntity<Void> updateCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
-        categoryHandler.updateCategory(categoryRequest);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Operation(summary = "Delete a category", description = "Deletes a category by its id.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Category deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "Category not found")
-    })
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        categoryHandler.deleteCategory(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping
     @Operation(summary = "Retrieve all categories with pagination and sorting",
             description = "This endpoint retrieves a paginated list of categories with optional sorting. You can specify the page number, page size, sort direction (ASC or DESC), and the field by which to sort (e.g., name or description).")

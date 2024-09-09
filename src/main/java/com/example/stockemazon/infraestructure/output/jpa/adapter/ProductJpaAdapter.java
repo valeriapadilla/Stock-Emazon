@@ -51,16 +51,6 @@ public class ProductJpaAdapter implements IProductPersistencePort {
     }
 
     @Override
-    public void updateProduct(Product product) {
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(product.getId());
-    }
-
-    @Override
-    public void deleteProduct(Long id) {
-
-    }
-
-    @Override
     public boolean existsById(Long id) {
         return false;
     }

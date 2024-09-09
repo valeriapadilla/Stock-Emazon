@@ -31,17 +31,6 @@ public class CategoryHandler implements ICategoryHandler{
     }
 
     @Override
-    public void updateCategory(CategoryRequest categoryRequest) {
-        Category category = categoryRequestMapper.toCategory(categoryRequest);
-        categoryServicePort.updateCategory(category);
-    }
-
-    @Override
-    public void deleteCategory(Long id) {
-        categoryServicePort.deleteCategory(id);
-    }
-
-    @Override
     public PageCustom<CategoryResponse> getAllCategories(Integer page, Integer size, String sort, String sortBy) {
         PageCustom<Category> categoryPage = categoryServicePort.getAllCategories(page, size, sort, sortBy);
         return paginationResponseMapper.toPageCustomCategoryResponse(categoryPage);

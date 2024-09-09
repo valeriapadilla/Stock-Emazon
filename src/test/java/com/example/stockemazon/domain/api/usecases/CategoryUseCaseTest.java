@@ -5,7 +5,6 @@ import com.example.stockemazon.domain.exceptions.DataOutOfLenghtException;
 import com.example.stockemazon.domain.exceptions.MissingAttributeException;
 import com.example.stockemazon.domain.exceptions.PaginationException;
 import com.example.stockemazon.domain.model.Category;
-import com.example.stockemazon.domain.model.PageCustom;
 import com.example.stockemazon.domain.spi.ICategoryPersistencePort;
 import com.example.stockemazon.domain.usecases.CategoryUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +22,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.List;
 @ExtendWith(MockitoExtension.class)
 class CategoryUseCaseTest {
     @Mock

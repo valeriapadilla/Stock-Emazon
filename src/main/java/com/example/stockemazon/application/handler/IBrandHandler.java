@@ -7,8 +7,6 @@ import com.example.stockemazon.domain.model.PageCustom;
 
 public interface IBrandHandler {
     void saveBrand(BrandRequest brandRequest);
-    void updateBrand(BrandRequest brandRequest);
-    void deleteBrand(Long id);
     PageCustom<BrandResponse> getAllBrands(Integer page, Integer size, String sort, String sortBy);
 
 }
